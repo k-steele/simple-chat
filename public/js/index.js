@@ -1,7 +1,9 @@
 var socket = io();
+var number = Math.floor(Math.random() * 10000) + 10000;
+var name = `user${number}`;
 
 socket.on('connect', function () {
-  console.log('connected to the server');
+  console.log(`${name} connected to the server`);
 });
 
 socket.on('newMessage', function (message) {
@@ -33,7 +35,7 @@ jQuery('#message-form').on('submit', function(e) {
   var messageTextBox = jQuery('[name=message]');
 
   socket.emit('createMessage', {
-    from: 'user',
+    from: name,
     text: messageTextBox.val()
   }, function () {
     messageTextBox.val('');
@@ -55,7 +57,7 @@ locationButton.on('click', function (e) {
       longitude: position.coords.longitude
     });
   }, function () {
-    locationButton.removeAttr('disabled').text('Send location');    
+    locationButton.removeAttr('disabled').text('Send location');
     alert('Unable to fetch location');
   });
 });
